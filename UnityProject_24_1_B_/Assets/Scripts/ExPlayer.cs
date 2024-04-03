@@ -14,7 +14,7 @@ public class ExPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -42,8 +42,17 @@ public class ExPlayer : MonoBehaviour
         {
             point = 0;
             gameObject.transform.position = new Vector3(0.0f, 3.0f, 0.0f);
-            Debug.Log(collision.gameObject.name);
+            Debug.Log(collision.gameObject.tag);
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            Debug.Log("아이템과 충돌함");
+            point += 10;
+            Destroy(other.gameObject);
+        }
+    }
 }
