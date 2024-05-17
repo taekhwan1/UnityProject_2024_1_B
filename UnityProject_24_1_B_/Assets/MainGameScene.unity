@@ -282,7 +282,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6b0c8fb1af5ce479da45701d1032de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CircleObject: {fileID: 8262853633172472990, guid: 9eadaf4b2f0f6374abe7bde48b841a96, type: 3}
+  CircleObject:
+  - {fileID: 8262853633172472990, guid: 9eadaf4b2f0f6374abe7bde48b841a96, type: 3}
+  - {fileID: 8262853633172472990, guid: 43074f983912d2941aa5061a28abb1b6, type: 3}
+  - {fileID: 8262853633172472990, guid: d5aee6086eedac64ba66748e2a8b1fba, type: 3}
+  - {fileID: 8262853633172472990, guid: d86189c8e3206b340aacf837f13b56a9, type: 3}
+  - {fileID: 8262853633172472990, guid: 91ce2c69864ea264197b99f75250bf1a, type: 3}
+  - {fileID: 8262853633172472990, guid: 7f301aa4d9577654f98b38431e3837a6, type: 3}
+  - {fileID: 8262853633172472990, guid: db77c66373369a8488b668fd8b4168c3, type: 3}
   GenTransform: {fileID: 1657948330}
   TimeCheck: 0
   isGen: 0
@@ -628,7 +635,7 @@ GameObject:
   - component: {fileID: 1657948330}
   m_Layer: 0
   m_Name: GenPoint
-  m_TagString: Untagged
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

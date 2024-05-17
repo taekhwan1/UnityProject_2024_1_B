@@ -7,10 +7,18 @@ public class CircleObject : MonoBehaviour
     public bool isDrag;           //드래그 중인지 판단하는 (bool)
     public bool isUsed;           //사용 완료 판단하는 (bool)
     Rigidbody2D rigidbody2D;      //2D 강체를 불러온다.
+
+    public int index;             //과일 번호를 만든다.
+
+    void Awake()                                          //시작하기전 소스 단계에서부터 셋팅
+    {
+        isUsed = false;                                   //사용 완료가 되지 않음(처음 사용)
+        rigidbody2D = GetComponent<Rigidbody2D>();        //강체를 가져온다.
+        rigidbody2D.simulated = false;                    //생성될때는 시뮬레이팅 되지 않는다.
+    } 
     void Start()
     {
-        isUsed = false;                                  //사용 완료가 되지 않음(처음 사용)
-        rigidbody2D = GetComponent<Rigidbody2D>();       //강체를 가져온다.
+       
     }
 
     
@@ -53,6 +61,40 @@ public class CircleObject : MonoBehaviour
         if(Temp != null)                                                  //해당 오브젝트가 존재하면
         {
             Temp.gameObject.GetComponent<GameManager>().GenObject();      //GenObject 함수를 호출 한다. (GetComponent 통해서 클래스에 접근한다)
+        }
+    }
+
+    public void Used()
+    {
+        isDrag = false;                    //드래그가 종료
+        isUsed = true;                     //사용이 완료
+        rigidbody2D.simulated = true;      //물리 현상 시작
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (index >= 7)                     //준비된 과일이 최대 7개
+            return;                      
+
+        if (collision.gameObject.tag == "Fruit")         //충돌 물체의 Tag 가 Fruit 일 경우
+        {
+            CircleObject temp = collision.gameObject.GetComponent<CircleObject>();    //임시로 Class temp를 선언하고 충돌체의 Class(CircleObject)를 받아온다.
+
+            if(temp.index == index)  //과일 번호가 같은 경우
+            {
+                if(gameObject.GetInstanceID() > collision.gameObject.GetInstanceID())  //유니티에서 지원하는 고유의 ID를 받아와서 ID가 큰쪽에서 다음 과일 생성
+                {
+                    //GameManager 에서 생성함수 호출
+                    GameObject Temp = GameObject.FindWithTag("GameManager");          //Tag : GameManager를 Scene 찾아서 오브젝트를 가져온다.
+                    if (Temp != null)                                                 //해당 오브젝트가 존재하면
+                    {
+                        Temp.gameObject.GetComponent<GameManager>().MergeObject(index, gameObject.transform.position);   //생성된 MerageObject 함수에 인수와 함께 전달
+                    }
+
+                    Destroy(temp.gameObject);                                      //충돌 물체 파괴
+                    Destroy(gameObject);                                           //자기 자신 파괴
+                }
+            }
         }
     }
 }
